@@ -8,7 +8,7 @@ namespace LogWebApi.Exceptions
 {
     public class InvalidProductNoException : OrderException
     {
-        public override ExceptionSeverity Severity => ExceptionSeverity.Warn;
+        public override ExceptionSeverity Severity => ExceptionSeverity.Fatal;
 
         public InvalidProductNoException(int productNo)
         {

@@ -34,12 +34,12 @@ namespace LogWebApi.Extensions
                         if (orderException != null) // customized exception, writing log according to its defined severity
                         {
                             errorMessage = orderException.ErrorMessage;                           
-                            SysLogger.Log(orderException.ToString(), orderException.Severity);
+                            SysLogger.System.Log($"{errorMessage},{orderException.ToString()}", orderException.Severity);
                         }
                         else
                         {
                             errorMessage = contextFeature.Error.Message;
-                            SysLogger.Error(contextFeature.Error.ToString());
+                            SysLogger.System.Error(contextFeature.Error.ToString());
                         }
 
                         json = Newtonsoft.Json.JsonConvert.SerializeObject(new ResponseViewModel<object>

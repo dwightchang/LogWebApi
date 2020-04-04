@@ -29,5 +29,16 @@ namespace LogWebApi.Controllers
                 Result = ""
             });
         }
+
+        public IActionResult FindOrder(int orderSn)
+        {
+            var order = OrderModel.FindByOrderSn(orderSn);
+
+            return Json(new ResponseViewModel<OrderModel>
+            {
+                Success = true,
+                Result = order
+            });
+        }
     }
 }
