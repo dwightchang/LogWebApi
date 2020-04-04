@@ -1,4 +1,6 @@
-﻿using LogWebApi.Model;
+﻿using LogWebApi.Exceptions;
+using LogWebApi.Model;
+using LogWebApi.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -24,11 +26,26 @@ namespace LogWebApi.Extensions
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
+                        var orderException = contextFeature.Error as OrderException;
 
-                        var json = Newtonsoft.Json.JsonConvert.SerializeObject(new ResponseViewModel<object>
+                        string json = "";
+                        string errorMessage = "";
+
+                        if (orderException != null) // customized exception, writing log according to its defined severity
+                        {
+                            errorMessage = orderException.ErrorMessage;                           
+                            SysLogger.Log(orderException.ToString(), orderException.Severity);
+                        }
+                        else
+                        {
+                            errorMessage = contextFeature.Error.Message;
+                            SysLogger.Error(contextFeature.Error.ToString());
+                        }
+
+                        json = Newtonsoft.Json.JsonConvert.SerializeObject(new ResponseViewModel<object>
                         {
                             Success = false,
-                            Message = contextFeature.Error.Message,
+                            Message = errorMessage,
                             Result = null
                         });
 

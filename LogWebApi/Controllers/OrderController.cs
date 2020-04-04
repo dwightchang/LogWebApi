@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LogWebApi.Exceptions;
+using LogWebApi.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogWebApi.Controllers
@@ -15,7 +17,17 @@ namespace LogWebApi.Controllers
 
         public IActionResult CreateOrder(int productNo)
         {
-            throw new Exception("order fail");
+            if(productNo <= 0)
+            {
+                throw new InvalidProductNoException(productNo);
+            }
+
+            return Json(new ResponseViewModel<string>()
+            {
+                Success = true,
+                Message = "Order was created",
+                Result = ""
+            });
         }
     }
 }

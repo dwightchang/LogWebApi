@@ -50,7 +50,7 @@ namespace LogWebApi
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.ConfigureExceptionHandler();
+            app.ConfigureExceptionHandler();            
 
             app.UseMvc(routes =>
             {
