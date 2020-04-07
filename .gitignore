@@ -6,3 +6,7 @@ LogWebApi/obj/
 .vs/
 
 LogWebApi/logs/
+
+ApiProxy/bin/
+
+ApiProxy/obj/

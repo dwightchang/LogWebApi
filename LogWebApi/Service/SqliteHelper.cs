@@ -14,8 +14,12 @@ namespace LogWebApi.Service
     {
         private static string _connstr = "Data source=Order.db";        
 
+        /// <summary>
+        /// execute a SQL command
+        /// </summary>        
         public static IEnumerable<T> Query<T>(string sql, object param)
         {
+            // start the timer
             Stopwatch watch = Stopwatch.StartNew();
 
             try
@@ -29,6 +33,7 @@ namespace LogWebApi.Service
             }
             catch (Exception e)
             {
+                // log sql content and parameters
                 SysLogger.System.Error($"sql error, sql:{sql}, param: {JsonConvert.SerializeObject(param)}, message: {e.ToString()}");
                 throw;
             }
