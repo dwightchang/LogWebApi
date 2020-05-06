@@ -38,7 +38,7 @@ namespace ApiProxy
                         throw new Exception("unknown content type");
                 }
             }
-        }
+        }        
 
         public Dictionary<string, string> headers { get; set; }
         public ContentType contentType { get; set; }

@@ -30,9 +30,10 @@ namespace LogWebApi.Controllers
             });
         }
 
-        public IActionResult FindOrder(int orderSn)
+        [HttpPost]
+        public IActionResult FindOrder([FromBody] OrderQuery qry)
         {
-            var order = OrderModel.FindByOrderSn(orderSn);
+            var order = OrderModel.FindByOrderSn(qry.OrderSn);
 
             return Json(new ResponseViewModel<OrderModel>
             {

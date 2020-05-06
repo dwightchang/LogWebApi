@@ -1,4 +1,5 @@
-﻿using LogWebApi.Enums;
+﻿using ApiProxy;
+using LogWebApi.Enums;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LogWebApi.Service
 {
-    public class SysLogger
+    public class SysLogger : IApiLogger
     {
         private Logger _logger;
 
@@ -19,6 +20,7 @@ namespace LogWebApi.Service
         public static SysLogger System => new SysLogger("System");
         public static SysLogger SqlElapsedTime => new SysLogger("SqlElapsedTime");
         public static SysLogger ApiElapsedTime => new SysLogger("ApiElapsedTime");
+        public static SysLogger RequestElapsedTime => new SysLogger("RequestElapsedTime");
 
         public void Info(string msg)
         {
@@ -60,6 +62,16 @@ namespace LogWebApi.Service
                     Error(msg);
                     break;
             }
+        }
+
+        public void Debug(string msg)
+        {
+            _logger.Debug(msg);
+        }
+
+        public void LogElapsedTime(string msg)
+        {
+            _logger.Trace(msg);
         }
     }
 }

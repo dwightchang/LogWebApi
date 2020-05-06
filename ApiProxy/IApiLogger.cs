@@ -6,9 +6,9 @@ namespace ApiProxy
 {
     public interface IApiLogger
     {
-        void info(string title, string msg);
-        void debug(string title, string msg);
-        void error(string title, string msg);
-        void logElapsedTime(string title, string msg);
+        void Info(string msg);
+        void Debug(string msg);
+        void Error(string msg);
+        void LogElapsedTime(string msg);
     }
 }
