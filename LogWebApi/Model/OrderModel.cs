@@ -19,7 +19,7 @@ namespace LogWebApi.Model
         {
             var orders = SqliteHelper.Query<Order>("select * from 'Order' where Sn = @sn", new { sn = 1 }).ToList();
             
-            if(orders.Count() == 0)
+            if(!orders.Any())
             {
                 return null;
             }

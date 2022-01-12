@@ -8,12 +8,12 @@ namespace ApiProxy.Proxy
 {
     public class OrderProxy : ProxyBase
     {
-        public OrderProxy(string ApiRootUrl, string ApiToken, IApiLogger logger): base(ApiRootUrl, ApiToken)
+        public OrderProxy(string ApiRootUrl, string ApiToken): base(ApiRootUrl, ApiToken)
         {
-            this.Logger = logger;
+            
         }
 
-        public FindOrderResp FindOrder(FindOrderReq req)
+        public FindOrderResult FindOrder(FindOrderReq req)
         {
             var data = new ApiRequestData()
             {
@@ -23,7 +23,14 @@ namespace ApiProxy.Proxy
                 postData = JsonConvert.SerializeObject(req)
             };
 
-            return InvokeApi<FindOrderResp>(data);
+            var resp = InvokeApi<FindOrderResp>(data);
+
+            if (!resp.Success)
+            {
+                throw new Exception(JsonConvert.SerializeObject(resp));
+            }
+
+            return resp.Result;
         }
     }
 }

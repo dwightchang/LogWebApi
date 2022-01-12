@@ -13,20 +13,17 @@ namespace LogWebApi.Controllers
     {
         public IActionResult SalesDashboard()
         {
-            OrderProxy proxy = new OrderProxy("http://localhost:63392", "f496896f-446f-4a5b-97c4-b6d12f66a22c", SysLogger.ApiElapsedTime);
-            var orderResp = proxy.FindOrder(new ApiProxy.Models.Order.FindOrderReq()
+            OrderProxy proxy = new OrderProxy("http://localhost:63392", "f496896f-446f-4a5b-97c4-b6d12f66a22c")
+            {
+                Logger = SysLogger.ApiElapsedTime
+            };
+
+            var orderData = proxy.FindOrder(new ApiProxy.Models.Order.FindOrderReq()
             {
                 OrderSn = 1
             });
 
-            if(orderResp.Success)
-            {
-                return Content(JsonConvert.SerializeObject(orderResp.Result));
-            }
-            else
-            {
-                return Content(orderResp.Message);
-            }            
+            return Content(JsonConvert.SerializeObject(orderData));
         }
     }
 }
