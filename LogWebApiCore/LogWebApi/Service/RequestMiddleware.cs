@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LogWebApi.Model;
 
 namespace LogWebApi.Service
 {
@@ -18,7 +19,7 @@ namespace LogWebApi.Service
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, ITraceFactory traceFactory)
         {
             // read request content
             string requestContent = "";       

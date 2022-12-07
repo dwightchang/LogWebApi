@@ -10,3 +10,15 @@ LogWebApi/logs/
 ApiProxy/bin/
 
 ApiProxy/obj/
+
+LogWebApiCore/ApiProxy/bin/
+
+LogWebApiCore/ApiProxy/obj/
+
+LogWebApiCore/LogWebApi/bin/Debug/netcoreapp2.1/logs/
+
+LogWebApiCore/LogWebApi/bin/
+
+LogWebApiCore/LogWebApi/obj/
+
+LogWebApiCore/LogWebApi/logs/
