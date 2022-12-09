@@ -10,6 +10,7 @@ namespace LogWebApiMvc.Models
     {
         public static int FindAccountId(string name)
         {
+            System.Threading.Thread.Sleep(5000);
             SysLogger.System.Info($"FindAccountId from {name}");
             return 1;
         }
