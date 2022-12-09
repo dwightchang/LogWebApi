@@ -22,3 +22,11 @@ LogWebApiCore/LogWebApi/bin/
 LogWebApiCore/LogWebApi/obj/
 
 LogWebApiCore/LogWebApi/logs/
+
+LogWebApiMvc/packages/
+
+LogWebApiMvc/LogWebApiMvc/bin/
+
+LogWebApiMvc/LogWebApiMvc/logs/
+
+LogWebApiMvc/LogWebApiMvc/obj/

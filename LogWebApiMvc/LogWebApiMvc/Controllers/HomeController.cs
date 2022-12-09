@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LogWebApiMvc.Models;
+using LogWebApiMvc.Models.Log;
 
 namespace LogWebApiMvc.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Login(string name)
         {
-            return View();
+            SysLogger.System.Info($"{name} login");
+            AccountModel.FindAccountId(name);
+            return Content("OK");
         }
 
         public ActionResult About()
