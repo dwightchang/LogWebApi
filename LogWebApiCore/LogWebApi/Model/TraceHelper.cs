@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LogWebApi.Model
 {
-    public class TraceFactory : ITraceFactory
+    public class TraceHelper : ITraceHelper
     {
-        public static AsyncLocal<TraceContext> Context = new AsyncLocal<TraceContext>()
+        public static AsyncLocal<TraceContent> Context = new AsyncLocal<TraceContent>()
         {
-            Value = new TraceContext()
+            Value = new TraceContent()
         };
     }
 }

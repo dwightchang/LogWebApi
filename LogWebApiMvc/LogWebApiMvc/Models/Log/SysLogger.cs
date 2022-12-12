@@ -18,9 +18,6 @@ namespace LogWebApiMvc.Models.Log
         }
 
         public static SysLogger System => new SysLogger("System");
-        public static SysLogger SqlElapsedTime => new SysLogger("Sqle");
-        public static SysLogger ApiElapsedTime => new SysLogger("Api");
-        public static SysLogger RequestElapsedTime => new SysLogger("Request");
 
         public void Info(string msg)
         {

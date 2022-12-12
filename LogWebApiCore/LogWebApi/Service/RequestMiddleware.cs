@@ -19,7 +19,7 @@ namespace LogWebApi.Service
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, ITraceFactory traceFactory)
+        public async Task Invoke(HttpContext context, ITraceHelper traceHelper)
         {
             // read request content
             string requestContent = "";       

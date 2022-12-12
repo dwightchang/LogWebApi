@@ -132,6 +132,7 @@
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\Log\LogItem.cs" />
     <Compile Include="Models\Log\LogTag.cs" />
+    <Compile Include="Models\Log\RequestLogData.cs" />
     <Compile Include="Models\Log\SysLogger.cs" />
     <Compile Include="Models\TraceContent.cs" />
     <Compile Include="Models\TraceHelper.cs" />

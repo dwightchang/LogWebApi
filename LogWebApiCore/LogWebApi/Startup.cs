@@ -37,7 +37,7 @@ namespace LogWebApi
 
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.TryAddTransient<ITraceFactory, TraceFactory>();
+            services.TryAddTransient<ITraceHelper, TraceHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

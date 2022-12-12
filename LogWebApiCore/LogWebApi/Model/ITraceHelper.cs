@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LogWebApi.Model
 {
-    public interface ITraceFactory
+    public interface ITraceHelper
     {
     }
 }

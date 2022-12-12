@@ -9,10 +9,11 @@ namespace LogWebApiMvc.Models
 {
     public class TraceHelper
     {
-        public static ThreadLocal<TraceContent> Trace;
+        public static ThreadLocal<TraceContent> Trace = new ThreadLocal<TraceContent>();
 
         public static void Init()
         {
+            Trace = new ThreadLocal<TraceContent>();
             GetTrace();
         }
 
@@ -28,9 +29,17 @@ namespace LogWebApiMvc.Models
                 Trace.Value = new TraceContent();
             }
 
-            if (string.IsNullOrEmpty(Trace.Value.TraceId))
+            if (HttpContext.Current != null &&
+                HttpContext.Current.Request != null &&
+                HttpContext.Current.Request.Headers != null &&
+                HttpContext.Current.Request.Headers.Count > 0)
             {
-                Trace.Value.TraceId = HttpContext.Current.Request.Headers["TraceId"];
+                var headerTraceId = HttpContext.Current.Request.Headers["TraceId"];
+
+                if (!string.IsNullOrEmpty(headerTraceId))
+                {
+                    Trace.Value.TraceId = headerTraceId;
+                }
             }
 
             if (string.IsNullOrEmpty(Trace.Value.TraceId))

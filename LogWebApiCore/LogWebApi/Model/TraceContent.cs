@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LogWebApi.Model
 {
-    public class TraceContext
+    public class TraceContent
     {
-        public string TraceId { get; set; } = Guid.NewGuid().ToString();
+        public string TraceId { get; set; } = Guid.NewGuid().ToString("N");
     }
 }
