@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using LogWebApi.Model.Log;
+using LogWebApi.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -12,19 +14,19 @@ namespace LogWebApi.Model
 {
     public class SysOpenTelemetryCollector
     {
-        public static readonly string SourceName = "AgencyTelemetry";
+        public static readonly string SourceName = "SysTelemetry";
         public static readonly List<Activity> ExportedItems = new List<Activity>();
         public static readonly ActivitySource MyActivitySource = new ActivitySource(SourceName);
 
         private static object _exportLock = new object();
         private static bool _processing = false;
 
-        public static async void ExportTelemetryTask(IGenericLogger logger, IContextPocketHolder contextPocketHolder)
+        public static async void ExportTelemetryTask(ITraceHelper traceHelper)
         {
-            await Task.Run(() => ExportTelemetry(logger, contextPocketHolder));
+            await Task.Run(() => ExportTelemetry(traceHelper));
         }
 
-        public static void ExportTelemetry(IGenericLogger logger, IContextPocketHolder contextPocketHolder)
+        public static void ExportTelemetry(ITraceHelper traceHelper)
         {
             if (_processing)
             {
@@ -49,34 +51,32 @@ namespace LogWebApi.Model
                             ExportedItems.Remove(item);
                             var traceId = item.Tags.FirstOrDefault(t => t.Key.Equals("TraceId")).Value;
 
-                            if (contextPocketHolder.ContextPocket != null)
-                                traceId = contextPocketHolder.ContextPocket.TraceId;
+                            //if (contextPocketHolder.ContextPocket != null)
+                            //    traceId = contextPocketHolder.ContextPocket.TraceId;
 
-                            var telemetry = new TelemetryLog()
+                            var telemetry = new LogItem()
                             {
-                                LogTime = item.StartTimeUtc.ConvertUtcToTaipeiTime(),
                                 TraceId = traceId,
                                 SpanId = item.SpanId.ToString(),
-                                StartTime = item.StartTimeUtc.ConvertUtcToTaipeiTime(),
+                                StartTime = item.StartTimeUtc.ToLocalTime(),
                                 SourceName = item.Source.Name,
                                 ActivityName = item.DisplayName,
-                                Duration = item.Duration.TotalMilliseconds,
+                                Duration = (long) item.Duration.TotalMilliseconds,
                                 Url = item.Tags.FirstOrDefault(t => t.Key.Equals("http.url")).Value,
                                 Clientip = item.Tags.FirstOrDefault(t => t.Key.Equals("Clientip")).Value
                             };
 
-                            logger.LogTelemetry(telemetry);
+                            SysLogger.System.Log(telemetry);
                         }
                         catch (Exception e)
                         {
-                            logger.Error(e.ToString());
-                            logger.Error($"ExportTelemetry fail, {JsonConvert.SerializeObject(item)}");
+                            SysLogger.System.Error($"ExportTelemetry fail, {JsonConvert.SerializeObject(item)}, {e}");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex.ToString());
+                    SysLogger.System.Error(ex.ToString());
                 }
                 finally
                 {
@@ -87,19 +87,19 @@ namespace LogWebApi.Model
 
         public static void AspNetCoreEnrich(Activity activity, string eventName, object rawObject)
         {
-            if (eventName.Equals("OnStartActivity"))
-            {
-                if (rawObject is HttpRequest httpRequest)
-                {
-                    var logger =
-                        httpRequest.HttpContext.RequestServices.GetRequiredService<FilebeatLogger>() as FilebeatLogger;
-                    var traceId = logger?.TraceId;
+            //if (eventName.Equals("OnStartActivity"))
+            //{
+            //    if (rawObject is HttpRequest httpRequest)
+            //    {
+            //        var logger =
+            //            httpRequest.HttpContext.RequestServices.GetRequiredService<FilebeatLogger>() as FilebeatLogger;
+            //        var traceId = logger?.TraceId;
 
-                    activity.SetTag("TraceId", traceId);
-                    activity.SetTag("Clientip",
-                        httpRequest.HttpContext?.Connection?.RemoteIpAddress?.ToString());
-                }
-            }
+            //        activity.SetTag("TraceId", traceId);
+            //        activity.SetTag("Clientip",
+            //            httpRequest.HttpContext?.Connection?.RemoteIpAddress?.ToString());
+            //    }
+            //}
         }
 
         public static void HttpClientEnrich(Activity activity, string eventName, object rawObject)

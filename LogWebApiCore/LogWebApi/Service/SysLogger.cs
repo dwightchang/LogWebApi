@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LogWebApi.Model;
+using LogWebApi.Model.Log;
+using Newtonsoft.Json;
 
 namespace LogWebApi.Service
 {
@@ -18,9 +21,6 @@ namespace LogWebApi.Service
         }
 
         public static SysLogger System => new SysLogger("System");
-        public static SysLogger SqlElapsedTime => new SysLogger("SqlElapsedTime");
-        public static SysLogger ApiElapsedTime => new SysLogger("ApiElapsedTime");
-        public static SysLogger RequestElapsedTime => new SysLogger("RequestElapsedTime");
 
         public void Info(string msg)
         {
@@ -72,6 +72,12 @@ namespace LogWebApi.Service
         public void LogElapsedTime(string msg)
         {
             _logger.Trace(msg);
+        }
+
+        public void Log(LogItem log)
+        {
+            //log.TraceId = TraceHelper.GetTrace().TraceId;
+            _logger.Info(JsonConvert.SerializeObject(log));
         }
     }
 }

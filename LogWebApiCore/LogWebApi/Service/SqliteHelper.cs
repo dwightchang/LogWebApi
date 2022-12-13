@@ -43,7 +43,7 @@ namespace LogWebApi.Service
                 float elapsedTime = (float) watch.ElapsedMilliseconds;
 
                 // log duration of sql execution 
-                SysLogger.SqlElapsedTime.Info($"{elapsedTime / 1000f:#0.00} {sql}");
+                //SysLogger.SqlElapsedTime.Info($"{elapsedTime / 1000f:#0.00} {sql}");
             }
         }
     }

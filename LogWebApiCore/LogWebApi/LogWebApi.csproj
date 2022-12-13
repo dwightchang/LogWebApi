@@ -10,6 +10,12 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
     <PackageReference Include="NLog" Version="4.7.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.1" />
+    <PackageReference Include="OpenTelemetry" Version="1.4.0-rc.1" />
+    <PackageReference Include="OpenTelemetry.Contrib.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta2" />
+    <PackageReference Include="OpenTelemetry.Exporter.InMemory" Version="1.4.0-rc.1" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0-rc.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.10" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.10" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.112" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="7.0.0" />    
   </ItemGroup>
@@ -22,10 +28,6 @@
     <None Update="Order.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\Log\" />
   </ItemGroup>
 
 </Project>
